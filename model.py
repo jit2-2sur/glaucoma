@@ -481,7 +481,7 @@ def segment_image(input_image):
     axes[2].imshow(disc_img)
     axes[2].imshow(cup_img, cmap='jet', alpha=0.5 * (cup_img > 0))
     axes[2].axis('off')
-    plt.show()
+    #plt.show()
 
     return predicted_disc, predicted_cup
 
@@ -494,7 +494,7 @@ def classify_image(input_image):
 
     overlap_image = pred_disc - pred_cup
     plt.imshow(overlap_image[0][0].detach().cpu().numpy())
-    plt.show()
+    #plt.show()
 
     yhat3 = classifier3(overlap_image)
     yhat3 = yhat3.squeeze(1).item()
