@@ -5,7 +5,7 @@ from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import FileResponse
 from tempfile import NamedTemporaryFile, TemporaryDirectory
 
-from model import classify_image
+from model import classify_image, classify_image2
 
 app = FastAPI()
 
@@ -36,3 +36,12 @@ async def get_image():
     if not image_path.is_file():
         return {"error": "Image not found on the server"}
     return FileResponse(image_path)
+
+
+@app.post("/predict2/")
+async def predict2(file: UploadFile):
+    try:
+        yhat, hat = classify_image2(file.file, file.filename)
+        return {"filename": file.filename, "probability": yhat, "final verdict": hat}
+    finally:
+        file.file.close()
